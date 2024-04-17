@@ -1,17 +1,3 @@
 #!/bin/sh
-# bin/compile <build-dir> <cache-dir> <env-dir>
-
-echo "-----> Installing Xvfb"
-apt-get update
-apt-get install -y xvfb
-
-echo "-----> Configuring Xvfb to start automatically"
-cat << EOF > $1/.profile.d/xvfb.sh
-#!/bin/bash
-export DISPLAY=:99
-Xvfb :99 -screen 0 1280x1024x24 &
-EOF
-
-chmod +x $1/.profile.d/xvfb.sh
-
-echo "Xvfb is installed and configured"
+echo "Xvfb support"
+exit 0

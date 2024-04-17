@@ -1,3 +1,22 @@
 #!/bin/sh
-echo "Xvfb support"
-exit 0
+# bin/compile <build-dir> <cache-dir> <env-dir>
+
+echo "-----> Install Xvfb"
+apt-get update
+apt-get install -y xvfb
+
+echo "-----> Configuring Xvfb to start automatically"
+cat << EOF > $1/.profile.d/xvfb.sh
+#!/bin/bash
+export DISPLAY=:99
+Xvfb :99 -screen 0 1280x1024x24 &
+EOF
+
+chmod +x $1/.profile.d/xvfb.sh
+
+echo "-----> Setting execute permissions on scripts"
+chmod +x $1/bin/detect
+chmod +x $1/bin/compile
+chmod +x $1/bin/release
+
+echo "Xvfb is installed and configured, and permissions are set"
